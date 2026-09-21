@@ -1,119 +1,484 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard | University Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | University of Lagos Student Portal</title>
+
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+
 <body>
-<div class="dash-shell">
 
-    <aside class="sidebar">
-        <div class="brand">
-            <div class="crest">UL</div>
-            <span>Student Portal</span>
-        </div>
-        <nav>
-            <a href="#" class="active"><span class="label">Dashboard</span></a>
-            <a href="#"><span class="label">Courses</span></a>
-            <a href="#"><span class="label">Results</span></a>
-            <a href="#"><span class="label">Fees</span></a>
-            <a href="#"><span class="label">Profile</span></a>
-        </nav>
-        <a th:href="@{/logout}" class="logout-link"><span class="label">Sign out</span></a>
-    </aside>
+    <div class="portal">
 
-    <main class="main">
-        <div class="topbar">
-            <div>
-                <h1>Welcome back, <span th:text="${student.fullName.split(' ')[0]}">Student</span> 👋</h1>
-                <div class="subtitle" th:text="${student.department} + ' &middot; ' + ${student.level} + ' &middot; ' + ${student.session}">
-                    Department &middot; Level &middot; Session
-                </div>
-            </div>
-            <div class="avatar-chip">
-                <div class="avatar" th:text="${#strings.substring(student.fullName,0,1)}">A</div>
-                <div>
-                    <div class="name" th:text="${student.fullName}">Full Name</div>
-                    <div class="matric" th:text="${student.matricNo}">Matric No</div>
-                </div>
-            </div>
-        </div>
+        <!-- =========================================================
+         SIDEBAR
+         ========================================================= -->
+        <aside class="sidebar">
 
-        <div class="stat-grid">
-            <div class="stat-card accent">
-                <div class="label">Current GPA</div>
-                <div class="value" th:text="${#numbers.formatDecimal(student.gpa, 1, 2)}">0.00</div>
-            </div>
-            <div class="stat-card">
-                <div class="label">Registered Units</div>
-                <div class="value" th:text="${student.totalUnits}">0</div>
-            </div>
-            <div class="stat-card">
-                <div class="label">Courses This Semester</div>
-                <div class="value" th:text="${#lists.size(student.courses)}">0</div>
-            </div>
-            <div class="stat-card">
-                <div class="label">Academic Standing</div>
-                <div class="value" style="font-size:18px;color:#1c8a56;">Good Standing</div>
-            </div>
-        </div>
+            <!-- University Brand -->
+            <div class="sidebar-brand">
 
-        <div class="panel">
-            <h2>Profile</h2>
-            <div class="panel-sub">Your registered biodata for this session</div>
-            <div class="profile-row">
-                <div class="field-block">
-                    <div class="label">Full Name</div>
-                    <div class="value" th:text="${student.fullName}">-</div>
+                <div class="unilag-crest">
+                    <span>UL</span>
                 </div>
-                <div class="field-block">
-                    <div class="label">Matric Number</div>
-                    <div class="value" th:text="${student.matricNo}">-</div>
+
+                <div class="brand-text">
+                    <strong>UNIVERSITY OF LAGOS</strong>
+                    <span>Student Portal</span>
                 </div>
-                <div class="field-block">
-                    <div class="label">Department</div>
-                    <div class="value" th:text="${student.department}">-</div>
-                </div>
-                <div class="field-block">
-                    <div class="label">Level</div>
-                    <div class="value" th:text="${student.level}">-</div>
-                </div>
-                <div class="field-block">
-                    <div class="label">Session</div>
-                    <div class="value" th:text="${student.session}">-</div>
-                </div>
+
             </div>
-        </div>
 
-        <div class="panel">
-            <h2>Registered Courses &amp; Results</h2>
-            <div class="panel-sub">Grades for the current semester</div>
-            <table class="courses">
-                <thead>
-                    <tr>
-                        <th>Code</th>
-                        <th>Title</th>
-                        <th>Units</th>
-                        <th>Grade</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="course : ${student.courses}">
-                        <td th:text="${course.code}">CSC 301</td>
-                        <td th:text="${course.title}">Course Title</td>
-                        <td th:text="${course.units}">3</td>
-                        <td>
-                            <span class="grade-pill" th:classappend="'grade-' + ${course.grade}"
-                                  th:text="${course.grade}">A</span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </main>
 
-</div>
+            <!-- Main Navigation -->
+            <nav class="sidebar-nav">
+
+                <!-- Dashboard -->
+                <a href="#" class="nav-item active">
+                    <span class="nav-icon">▦</span>
+                    <span>Dashboard</span>
+                </a>
+
+
+                <!-- Student Data -->
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">▣</span>
+                    <span>Student Data</span>
+                </a>
+
+
+                <!-- Payments -->
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">▤</span>
+                    <span>Payments</span>
+                </a>
+
+
+                <!-- Course Registration -->
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">▥</span>
+                    <span>Course Registration</span>
+                </a>
+
+
+                <!-- Results -->
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">☷</span>
+                    <span>Results</span>
+                </a>
+
+
+                <!-- Appointment -->
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">▣</span>
+                    <span>Appointment</span>
+                </a>
+
+
+                <!-- Election -->
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">♢</span>
+                    <span>Election</span>
+                </a>
+
+
+                <!-- Accommodation -->
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">⌂</span>
+                    <span>Accommodation</span>
+                </a>
+
+
+                <!-- Student Applications -->
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">▤</span>
+                    <span>Student Applications</span>
+                </a>
+
+            </nav>
+
+
+            <!-- Partner / External Links -->
+            <div class="sidebar-partners">
+
+                <a href="#" class="partner-item">
+                    <span class="partner-logo webtest-logo">◆</span>
+                    <span>webtest</span>
+                </a>
+
+                <a href="#" class="partner-item">
+                    <span class="partner-logo impata-logo">✣</span>
+                    <span>impata</span>
+                </a>
+
+            </div>
+
+
+            <!-- Logout -->
+            <div class="sidebar-footer">
+
+                <a th:href="@{/logout}" class="logout-link">
+                    <span class="nav-icon">↪</span>
+                    <span>Sign out</span>
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =========================================================
+         MAIN CONTENT
+         ========================================================= -->
+        <main class="main-content">
+
+
+            <!-- =====================================================
+             TOP HEADER
+             ===================================================== -->
+            <header class="top-header">
+
+                <!-- University Logo / Name -->
+                <div class="header-brand">
+
+                    <div class="header-crest">
+                        <span>UL</span>
+                    </div>
+
+                    <span class="university-name">
+                        UNIVERSITY OF LAGOS
+                    </span>
+
+                </div>
+
+
+                <!-- Student Profile -->
+                <div class="student-profile">
+
+                    <div class="profile-avatar">
+
+                        <span th:text="${#strings.substring(student.fullName, 0, 1)}">
+                            S
+                        </span>
+
+                    </div>
+
+                    <div class="profile-name">
+
+                        <span th:text="${student.fullName}">
+                            Student Name
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- =====================================================
+             DASHBOARD CONTENT
+             ===================================================== -->
+            <section class="dashboard-content">
+
+
+                <!-- =================================================
+                 LEFT / MAIN DASHBOARD
+                 ================================================= -->
+                <div class="dashboard-main">
+
+
+                    <!-- Student Summary Banner -->
+                    <section class="student-banner">
+
+                        <div class="student-banner-info">
+
+                            <h1 th:text="${student.fullName}">
+                                Student Name
+                            </h1>
+
+
+                            <p class="student-program" th:text="${student.department}">
+                                Bachelor of Science in Data Science
+                            </p>
+
+
+                            <span class="student-department">
+                                STATISTICS
+                            </span>
+
+                        </div>
+
+
+                        <!-- Academic Summary -->
+                        <div class="academic-summary">
+
+
+                            <!-- Year -->
+                            <div class="academic-item">
+
+                                <span class="academic-value" th:text="${student.level}">
+                                    2
+                                </span>
+
+                                <span class="academic-label">
+                                    Year
+                                </span>
+
+                            </div>
+
+
+                            <!-- Semester -->
+                            <div class="academic-item">
+
+                                <span class="academic-value">
+                                    Second
+                                </span>
+
+                                <span class="academic-label">
+                                    Semester
+                                </span>
+
+                            </div>
+
+
+                            <!-- Courses -->
+                            <div class="academic-item">
+
+                                <span class="academic-value" th:text="${#lists.size(student.courses)}">
+                                    0
+                                </span>
+
+                                <span class="academic-label">
+                                    Courses
+                                </span>
+
+                            </div>
+
+
+                            <!-- Units -->
+                            <div class="academic-item">
+
+                                <span class="academic-value" th:text="${student.totalUnits}">
+                                    0
+                                </span>
+
+                                <span class="academic-label">
+                                    Units
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+
+                    <!-- =================================================
+                     ACTION CARDS
+                     ================================================= -->
+                    <section class="dashboard-cards">
+
+
+                        <!-- Courses Card -->
+                        <a href="#" class="dashboard-card courses-card">
+
+                            <div class="card-icon courses-icon">
+                                <span>▤</span>
+                            </div>
+
+                            <div class="card-content">
+
+                                <h2>Courses</h2>
+
+                                <p>
+                                    <span th:text="${#lists.size(student.courses)}">
+                                        19
+                                    </span>
+                                    /
+                                    <span>96</span>
+                                    Completed
+                                </p>
+
+                                <div class="progress-bar">
+
+                                    <div class="progress-value" style="width: 20%;">
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </a>
+
+
+
+                        <!-- Refresh Payment Status -->
+                        <a href="#" class="dashboard-card payment-status-card">
+
+                            <div class="card-icon refresh-icon">
+                                <span>⟳</span>
+                            </div>
+
+                            <div class="card-content">
+
+                                <h2>
+                                    Refresh<br>
+                                    Payment<br>
+                                    Status
+                                </h2>
+
+                            </div>
+
+                        </a>
+
+
+
+                        <!-- Payments -->
+                        <a href="#" class="dashboard-card payments-card">
+
+                            <div class="card-icon payment-icon">
+                                <span>▣</span>
+                            </div>
+
+                            <div class="card-content">
+
+                                <h2>Payments</h2>
+
+                            </div>
+
+                        </a>
+
+
+
+                        <!-- Applications -->
+                        <a href="#" class="dashboard-card applications-card">
+
+                            <div class="card-icon application-icon">
+                                <span>▤</span>
+                            </div>
+
+                            <div class="card-content">
+
+                                <h2>Applications</h2>
+
+                            </div>
+
+                        </a>
+
+                    </section>
+
+
+
+                    <!-- =================================================
+                     OPTIONAL INFORMATION AREA
+                     ================================================= -->
+                    <section class="dashboard-message">
+
+                        <p>
+                            There is no new information.
+                        </p>
+
+                    </section>
+
+                </div>
+
+
+
+                <!-- =================================================
+                 RIGHT SIDEBAR
+                 ================================================= -->
+                <aside class="dashboard-right">
+
+
+                    <!-- Course Registration -->
+                    <div class="task-card">
+
+                        <h3>
+                            Complete your course registration
+                        </h3>
+
+                        <span class="task-time">
+                            0 Days left
+                        </span>
+
+                        <div class="task-progress">
+
+                            <div class="task-progress-value" style="width: 0%;">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Payment -->
+                    <div class="task-card">
+
+                        <h3>
+                            Complete your payment
+                        </h3>
+
+                        <span class="task-time">
+                            90 Days left
+                        </span>
+
+                        <div class="task-progress">
+
+                            <div class="task-progress-value" style="width: 100%;">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Edit Registration -->
+                    <div class="task-card">
+
+                        <h3>
+                            Edit your course registration
+                        </h3>
+
+                        <span class="task-time">
+                            0 Days left
+                        </span>
+
+                        <div class="task-progress">
+
+                            <div class="task-progress-value" style="width: 0%;">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- No New Information -->
+                    <div class="no-information">
+
+                        <em>
+                            There is no new info.
+                        </em>
+
+                    </div>
+
+                </aside>
+
+            </section>
+
+        </main>
+
+    </div>
+
 </body>
+
 </html>
