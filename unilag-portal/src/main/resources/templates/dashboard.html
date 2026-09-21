@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard | University Portal</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="dash-shell">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="crest">UL</div>
+            <span>Student Portal</span>
+        </div>
+        <nav>
+            <a href="#" class="active"><span class="label">Dashboard</span></a>
+            <a href="#"><span class="label">Courses</span></a>
+            <a href="#"><span class="label">Results</span></a>
+            <a href="#"><span class="label">Fees</span></a>
+            <a href="#"><span class="label">Profile</span></a>
+        </nav>
+        <a th:href="@{/logout}" class="logout-link"><span class="label">Sign out</span></a>
+    </aside>
+
+    <main class="main">
+        <div class="topbar">
+            <div>
+                <h1>Welcome back, <span th:text="${student.fullName.split(' ')[0]}">Student</span> 👋</h1>
+                <div class="subtitle" th:text="${student.department} + ' &middot; ' + ${student.level} + ' &middot; ' + ${student.session}">
+                    Department &middot; Level &middot; Session
+                </div>
+            </div>
+            <div class="avatar-chip">
+                <div class="avatar" th:text="${#strings.substring(student.fullName,0,1)}">A</div>
+                <div>
+                    <div class="name" th:text="${student.fullName}">Full Name</div>
+                    <div class="matric" th:text="${student.matricNo}">Matric No</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat-grid">
+            <div class="stat-card accent">
+                <div class="label">Current GPA</div>
+                <div class="value" th:text="${#numbers.formatDecimal(student.gpa, 1, 2)}">0.00</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Registered Units</div>
+                <div class="value" th:text="${student.totalUnits}">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Courses This Semester</div>
+                <div class="value" th:text="${#lists.size(student.courses)}">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Academic Standing</div>
+                <div class="value" style="font-size:18px;color:#1c8a56;">Good Standing</div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2>Profile</h2>
+            <div class="panel-sub">Your registered biodata for this session</div>
+            <div class="profile-row">
+                <div class="field-block">
+                    <div class="label">Full Name</div>
+                    <div class="value" th:text="${student.fullName}">-</div>
+                </div>
+                <div class="field-block">
+                    <div class="label">Matric Number</div>
+                    <div class="value" th:text="${student.matricNo}">-</div>
+                </div>
+                <div class="field-block">
+                    <div class="label">Department</div>
+                    <div class="value" th:text="${student.department}">-</div>
+                </div>
+                <div class="field-block">
+                    <div class="label">Level</div>
+                    <div class="value" th:text="${student.level}">-</div>
+                </div>
+                <div class="field-block">
+                    <div class="label">Session</div>
+                    <div class="value" th:text="${student.session}">-</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2>Registered Courses &amp; Results</h2>
+            <div class="panel-sub">Grades for the current semester</div>
+            <table class="courses">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Title</th>
+                        <th>Units</th>
+                        <th>Grade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="course : ${student.courses}">
+                        <td th:text="${course.code}">CSC 301</td>
+                        <td th:text="${course.title}">Course Title</td>
+                        <td th:text="${course.units}">3</td>
+                        <td>
+                            <span class="grade-pill" th:classappend="'grade-' + ${course.grade}"
+                                  th:text="${course.grade}">A</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+</div>
+</body>
+</html>
